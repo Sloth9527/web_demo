@@ -1,0 +1,67 @@
+version: "3.9"
+
+services:
+  #  app:
+  #    container_name: demo-server
+  #    build:
+  #      context: .
+  #      dockerfile: dev.Dockerfile
+  #    ports:
+  #    - 8080:8080
+  #    volumes:
+  #    - ./:/root/app
+  #    environment:
+  #      - APP_NAME=app_test
+  #      - MYSQL_HOST=demo-db
+  #      - MYSQL_PORT=3306
+  #      - MYSQL_DATABASE=web_demo
+  #      - MYSQL_USERNAME=root
+  #      - MYSQL_PASSWORD=tt
+  #    depends_on:
+  #      - redis
+  #      - db
+  #    networks:
+  #      - servers
+
+  redis:
+    container_name: demo-redis
+    image: "redis:alpine3.13"
+    ports:
+      - 6379:6379
+    networks:
+      - servers
+
+  db:
+    container_name: demo-db
+    image: "mysql:8.0"
+    command: ['--default-authentication-plugin=mysql_native_password', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci', '--skip-character-set-client-handshake']
+    restart: always
+    ports:
+      - 53306:3306
+    environment:
+      MYSQL_DATABASE: web_demo_test
+      MYSQL_ROOT_PASSWORD: tt
+      LANG: C.UTF-8
+    volumes:
+      - ../java_data/demo_db:/var/lib/mysql
+    networks:
+      - servers
+
+  mq:
+    container_name: demo_mq
+    hostname: demo_mq
+    image: "rabbitmq:3.8-management-alpine"
+    restart: always
+    ports:
+      - 15672:15672
+      - 5672:5672
+    volumes:
+      - ../java_data/demo_mq:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=root
+      - RABBITMQ_DEFAULT_PASS=root
+    networks:
+      - servers
+
+networks:
+  servers:

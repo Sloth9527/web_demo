@@ -1,0 +1,3 @@
+ALTER TABLE `user`
+    MODIFY COLUMN `password` char(32) CHARACTER SET utf8 NOT NULL
+

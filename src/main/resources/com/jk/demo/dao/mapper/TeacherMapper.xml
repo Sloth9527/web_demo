@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.demo.dao.mapper.TeacherMapper">
+  <resultMap id="BaseResultMap" type="com.jk.demo.dao.entity.Teacher">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="t_no" jdbcType="VARCHAR" property="tNo" />
+    <result column="t_name" jdbcType="VARCHAR" property="tName" />
+    <result column="t_sex" jdbcType="VARCHAR" property="tSex" />
+    <result column="t_birthday" jdbcType="TIMESTAMP" property="tBirthday" />
+    <result column="prof" jdbcType="VARCHAR" property="prof" />
+    <result column="depart" jdbcType="VARCHAR" property="depart" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from teacher
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jk.demo.dao.entity.Teacher" useGeneratedKeys="true">
+    insert into teacher (t_no, t_name, t_sex, 
+      t_birthday, prof, depart
+      )
+    values (#{tNo,jdbcType=VARCHAR}, #{tName,jdbcType=VARCHAR}, #{tSex,jdbcType=VARCHAR}, 
+      #{tBirthday,jdbcType=TIMESTAMP}, #{prof,jdbcType=VARCHAR}, #{depart,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.jk.demo.dao.entity.Teacher">
+    update teacher
+    set t_no = #{tNo,jdbcType=VARCHAR},
+      t_name = #{tName,jdbcType=VARCHAR},
+      t_sex = #{tSex,jdbcType=VARCHAR},
+      t_birthday = #{tBirthday,jdbcType=TIMESTAMP},
+      prof = #{prof,jdbcType=VARCHAR},
+      depart = #{depart,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, t_no, t_name, t_sex, t_birthday, prof, depart
+    from teacher
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, t_no, t_name, t_sex, t_birthday, prof, depart
+    from teacher
+  </select>
+</mapper>

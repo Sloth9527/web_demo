@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.demo.dao.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.jk.demo.dao.entity.Student">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="s_no" jdbcType="VARCHAR" property="sNo" />
+    <result column="s_name" jdbcType="VARCHAR" property="sName" />
+    <result column="s_sex" jdbcType="VARCHAR" property="sSex" />
+    <result column="s_birthday" jdbcType="TIMESTAMP" property="sBirthday" />
+    <result column="class_num" jdbcType="VARCHAR" property="classNum" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from student
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jk.demo.dao.entity.Student" useGeneratedKeys="true">
+    insert into student (s_no, s_name, s_sex, 
+      s_birthday, class_num)
+    values (#{sNo,jdbcType=VARCHAR}, #{sName,jdbcType=VARCHAR}, #{sSex,jdbcType=VARCHAR}, 
+      #{sBirthday,jdbcType=TIMESTAMP}, #{classNum,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.jk.demo.dao.entity.Student">
+    update student
+    set s_no = #{sNo,jdbcType=VARCHAR},
+      s_name = #{sName,jdbcType=VARCHAR},
+      s_sex = #{sSex,jdbcType=VARCHAR},
+      s_birthday = #{sBirthday,jdbcType=TIMESTAMP},
+      class_num = #{classNum,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, s_no, s_name, s_sex, s_birthday, class_num
+    from student
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, s_no, s_name, s_sex, s_birthday, class_num
+    from student
+  </select>
+</mapper>

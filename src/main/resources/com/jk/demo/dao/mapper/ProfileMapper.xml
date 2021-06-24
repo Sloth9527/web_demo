@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.demo.dao.mapper.ProfileMapper">
+  <resultMap id="BaseResultMap" type="com.jk.demo.dao.entity.Profile">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="birth_date" jdbcType="DATE" property="birthDate" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from profile
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jk.demo.dao.entity.Profile" useGeneratedKeys="true">
+    insert into profile (age, nick_name, birth_date, 
+      user_id, created_at, updated_at
+      )
+    values (#{age,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}, #{birthDate,jdbcType=DATE}, 
+      #{userId,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.jk.demo.dao.entity.Profile">
+    update profile
+    set age = #{age,jdbcType=INTEGER},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      birth_date = #{birthDate,jdbcType=DATE},
+      user_id = #{userId,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, age, nick_name, birth_date, user_id, created_at, updated_at
+    from profile
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, age, nick_name, birth_date, user_id, created_at, updated_at
+    from profile
+  </select>
+</mapper>

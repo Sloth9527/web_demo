@@ -1,0 +1,2 @@
+ALTER TABLE `user`
+    MODIFY COLUMN `username` varchar(25) CHARACTER SET utf8 NOT NULL UNIQUE

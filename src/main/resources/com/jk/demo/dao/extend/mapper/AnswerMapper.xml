@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jk.demo.dao.extend.mapper.AnswerMapper">
+  <resultMap id="BaseResultMap" type="com.jk.demo.dao.extend.entity.AnswerDao">
+    <id column="id" jdbcType="INTEGER" property="id"/>
+    <result column="s_no" jdbcType="VARCHAR" property="sNo"/>
+    <result column="degree" jdbcType="DECIMAL" property="degree"/>
+    <result column="c_no" jdbcType="VARCHAR" property="cNo"/>
+    <result column="letter_grade" jdbcType="CHAR" property="letterGrade"/>
+
+    <association property="student" resultMap="com.jk.demo.dao.mapper.StudentMapper.BaseResultMap"/>
+    <association property="course" resultMap="com.jk.demo.dao.mapper.CourseMapper.BaseResultMap"/>
+    <association property="teacher" resultMap="com.jk.demo.dao.mapper.TeacherMapper.BaseResultMap"/>
+  </resultMap>
+
+  <select id="index" resultMap="BaseResultMap"
+    parameterType="com.jk.demo.service.payload.AnswerPayload">
+    select s.*, g.letter_grade, st.*, c.*, t.* from score as s
+    inner join grade as g on s.degree between g.low and g.up
+    inner join student as st on s.s_no = st.s_no
+    inner join course as c on s.c_no = c.c_no
+    inner join teacher as t on c.t_no = t.t_no
+    <where>
+      <if test="degreeLow != null and degreeUp != null">
+        AND s.degree between #{degreeLow} and #{degreeUp}
+      </if>
+      <if test="letterGrade != null">
+        AND g.letter_grade in
+        <foreach collection="letterGrade" index="index" item="item" open="(" close=")"
+          separator=",">
+          #{item}
+        </foreach>
+      </if>
+      <if test="sName != null">
+        <bind name="name" value="'%'+ _parameter.getSName() +'%'"/>
+        AND st.s_name like #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="startStuDate != null and endStuDate != null">
+        AND st.s_birthday between #{startStuDate} and #{endStuDate}
+      </if>
+    </where>
+    <if test="sortColumnName != null and sortDirection != null">
+      order by ${sortColumnName} ${sortDirection}
+    </if>
+    limit
+    <choose>
+      <when test="pageSize != null">#{pageSize}</when>
+      <otherwise>20</otherwise>
+    </choose>
+    offset
+    <choose>
+      <when test="offset != null">#{pageSize}</when>
+      <otherwise>0</otherwise>
+    </choose>
+  </select>
+</mapper>

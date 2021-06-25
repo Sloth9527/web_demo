@@ -1,0 +1,65 @@
+spring:
+  application:
+    name: ${APP_NAME:unnamed}
+
+  banner:
+    charset: UTF-8
+    location: banner.txt
+
+  datasource:
+    username: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:tt}
+    url: jdbc:mysql://${MYSQL_HOST:0.0.0.0}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:web_demo}?useUnicode=true&characterEncoding=utf8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  redis:
+    host: 0.0.0.0
+    port: 6379
+    database: 0
+
+  flyway:
+    encoding: utf-8
+    baseline-on-migrate: true
+    baseline-version: 0
+    enabled: false
+    locations: classpath:db/migration
+    clean-disabled: false
+    out-of-order: false
+    validate-on-migrate: true
+    schemas: web_demo
+    table: flyway_schema_history
+    user: ${MYSQL_USERNAME:root}
+    password: ${MYSQL_PASSWORD:tt}
+
+  jackson:
+    time-zone: Asia/Shanghai
+
+  mvc:
+    format:
+      date: yyyy-MM-dd
+      time: HH:mm:ss
+      date-time: yyyy-MM-dd HH:mm:ss
+
+  rabbitmq:
+    host: 0.0.0.0
+    port: 5672
+    username: root
+    password: root
+  boot:
+    admin:
+      client:
+        url: http://localhost:8091
+
+mybatis:
+  mapper-locations: classpath:com/jk/demo/dao/mapper/*Mapper.xml,com/jk/demo/dao/extend/mapper/*Mapper.xml
+  configuration:
+    cache-enabled: true
+    lazy-loading-enabled: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+logging:
+  level:
+    com.jk.demo.dao.mapper: debug
+    com.jk.demo.dao.extend.mapper: debug
+server:
+  port: 8090

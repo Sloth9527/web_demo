@@ -1,4 +1,4 @@
-FROM jk9527/web_demo:base
+FROM jk9527/web_demo:base as builder
 
 WORKDIR /root/app
 

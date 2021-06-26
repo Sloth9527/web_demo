@@ -10,11 +10,11 @@ ADD ./demo-dao/pom.xml ./demo-dao/pom.xml
 ADD ./demo-server/pom.xml ./demo-server/pom.xml
 ADD ./demo-test/pom.xml ./demo-test/pom.xml
 
-RUN mvn dependency:go-offline
+RUN mvn dependency:go-offline -Dmaven.test.skip=true
 
 COPY . .
 
-RUN mvn package -o
+RUN mvn package -o -Dmaven.test.skip=true
 
 
 FROM openjdk:11-jdk as prod

@@ -4,7 +4,7 @@ WORKDIR /root/app
 
 COPY . .
 
-RUN mvn package -o
+RUN mvn package -o -Dmaven.test.skip=true
 
 FROM openjdk:11-jdk as prod
 

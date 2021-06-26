@@ -1,20 +1,6 @@
 version: "3.9"
 
 services:
-  app-image:
-    container_name: demo-app-image
-    image: jk9527/web_demo:master
-    ports:
-      - 8090:8090
-    env_file:
-      - ./env/dev-image.env
-    depends_on:
-      - redis
-      - db
-      - mq
-    networks:
-      - servers
-
   redis:
     container_name: demo-redis
     image: redis:alpine3.13

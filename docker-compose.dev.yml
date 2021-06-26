@@ -1,9 +1,11 @@
 version: "3.9"
 
 services:
-  app-image:
-    container_name: demo-app-image
-    image: jk9527/web_demo:master
+  app:
+    container_name: demo-server
+    build:
+      context: .
+      dockerfile: package.Dockerfile
     ports:
       - 8090:8090
     env_file:

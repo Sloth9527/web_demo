@@ -13,8 +13,8 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   redis:
-    host: 0.0.0.0
-    port: 6379
+    host: ${REDIS_HOST:0.0.0.0}
+    port: ${REDIS_PORT:6379}
     database: 0
 
   flyway:
@@ -41,10 +41,10 @@ spring:
       date-time: yyyy-MM-dd HH:mm:ss
 
   rabbitmq:
-    host: 0.0.0.0
-    port: 5672
-    username: root
-    password: root
+    host: ${RABBITMQ_HOST:0.0.0.0}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:root}
+    password: ${RABBITMQ_PASSWORD:root}
   boot:
     admin:
       client:
